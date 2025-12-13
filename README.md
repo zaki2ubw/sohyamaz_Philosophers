@@ -31,6 +31,7 @@ char *function(char *arg1, char arg2, int arg3);
 ### `write`
 ### `usleep`
 ### `gettimeofday`
+### `pthreads`
 ### `pthread_create`
 ### `pthread_detach`
 ### `pthread_join`
