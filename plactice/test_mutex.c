@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 16:14:15 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/13 20:50:16 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:58:43 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 void	*notify_threads(void *arg);
 
 static int	shared_counter;
+static pthread_mutex_t	atomic_key;
 
 int	main(int argc, char **argv)
 {
@@ -36,6 +37,12 @@ int	main(int argc, char **argv)
 		return (perror("malloc"), 1);
 	created = 0;
 	shared_counter = 0;
+	if (pthread_mutex_init(&atomic_key, NULL) != 0)
+	{
+		fprintf(stderr, "error: mutex_init is failed");
+		return (free(threads_array), 1);
+	}
+	printf("there is a mutex\n");
 	while (created < num_of_thread)
 	{
 		if (pthread_create(&threads_array[created], NULL, notify_threads, NULL) != 0)
@@ -45,7 +52,6 @@ int	main(int argc, char **argv)
 		}
 		created++;
 	}
-	printf("there is no mutex\n");
 	joined = 0;
 	while (joined < num_of_thread)
 	{
@@ -57,6 +63,11 @@ int	main(int argc, char **argv)
 		joined++;
 	}
 	printf("expected count = %zu, actual count = %d\n", num_of_thread * (size_t)LOOPS, shared_counter);
+	if (pthread_mutex_destroy(&atomic_key) != 0)
+	{
+		fprintf(stderr, "error: mutex_init is failed");
+		return (free(threads_array), 1);
+	}
 	free(threads_array);
 	return (0);
 }
@@ -66,12 +77,32 @@ void	*notify_threads(void *arg)
 	int	i;
 
 	(void)arg;
-	printf("this thread id is %lu\n", (unsigned long)pthread_self());
 	i = 0;
 	while (i < LOOPS)
 	{
+		if (pthread_mutex_lock(&atomic_key) != 0)
+		{
+			fprintf(stderr, "error: mutex_lock is failed");
+			return ((void *)321);
+		}
 		shared_counter++;
 		i++;
+		if (pthread_mutex_unlock(&atomic_key) != 0)
+		{
+			fprintf(stderr, "error: mutex_unlock is failed");
+			return ((void *)321);
+		}
+	}
+	if (pthread_mutex_lock(&atomic_key) != 0)
+	{
+		fprintf(stderr, "error: mutex_lock is failed");
+		return ((void *)321);
+	}
+	printf("Thread id %lu counted %d times.\n", (unsigned long)pthread_self(), i);
+	if (pthread_mutex_unlock(&atomic_key) != 0)
+	{
+		fprintf(stderr, "error: mutex_unlock is failed");
+		return ((void *)321);
 	}
 	return ((void *)123);
 }

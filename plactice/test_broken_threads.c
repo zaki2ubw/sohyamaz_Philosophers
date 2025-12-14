@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 19:42:24 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/13 20:35:57 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/14 13:03:18 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void	*notify_threads(void *arg)
 		shared_counter++;
 		i++;
 	}
+	printf("Thread id %lu counted %d times\n.", (unsigned long)pthread_self(), i);
 	return ((void *)123);
 }
