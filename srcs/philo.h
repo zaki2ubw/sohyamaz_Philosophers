@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:11:32 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/20 18:30:53 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/20 18:50:05 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <stdlib.h>
+# include <stdint.h>
+# include <stdbool.h>
+
+typedef enum	e_timeset
+{
+	die_ms,
+	eat_ms,
+	sleep_ms,
+}	sim_timeset;
 
 typedef struct	s_args
 {
 	uint64_t	num_of_philos;
-	uint64_t	simulate_time[sizeof(t_times)];
+	uint64_t	simulate_time[sizeof(sim_timeset)];
 	uint64_t	need_to_eat;
 } t_args;
 
-typedef enum	e_times
-{
-	die_ms;
-	eat_ms;
-	sleep_ms;
-}	t_times ;
-
 //parser
-bool	parse_args(const int argc, const char **argv, t_args *parsed_args);
+bool	parse_args(int argc, char **argv, t_args *parsed_args);
 
 //philo_util
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num);
