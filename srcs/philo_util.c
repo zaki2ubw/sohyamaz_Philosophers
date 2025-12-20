@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:22:25 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/20 17:22:58 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/20 18:30:43 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,27 @@ bool	is_valid_number(char c)
 	if (c < '0' || c > '9')
 		return (0);
 	return (1);
+}
+
+void	*philo_calloc(size_t mem_byte, size_t mem_size)
+{
+	unsigned char	*allocated_buf;
+	size_t			allocate_size;
+	size_t			i;
+
+	if (mem_byte == 0 || mem_size == 0)
+		return (NULL);
+	if (mem_size != 0 && mem_byte != 0 && mem_byte > SIZE_MAX / mem_size)
+		return (NULL);
+	allocate_size = mem_byte * mem_size;
+	allocated_buf = (unsigned char *)malloc(allocate_size);
+	if (allocated_buf == NULL)
+		return (NULL);
+	i = 0;
+	while (i < allocate_size)
+	{
+		allocated_buf[i] = 0;
+		i++;
+	}
+	return (allocated_buf);
 }

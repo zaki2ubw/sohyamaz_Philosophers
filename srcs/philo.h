@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:11:32 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/20 17:24:37 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/20 18:30:53 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ bool	parse_args(const int argc, const char **argv, t_args *parsed_args);
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num);
 bool	philo_strlen(const char *str, size_t *len);
 bool	is_valid_number(char c);
+void	*philo_calloc(size_t mem_byte, size_t mem_size);
 
 #endif
