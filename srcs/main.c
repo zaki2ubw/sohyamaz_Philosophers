@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	if (config_info == NULL)
 		return (1);
 	//perse
-	if (parse_args(argc, argv, config_info) == 0)
+	if (parse_arguments(argc, argv, config_info) == 0)
 		return (free(config_info), 1);
 	printf("num_of_philos: %lu\n", config_info->num_of_philos);
 	printf("ttdie: %lu\n", config_info->simulate_time[die_ms]);

@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-bool	parse_args(int argc, char **argv, t_args *parsed_args)
+bool	parse_arguments(int argc, char **argv, t_args *parsed_args)
 {
 	int	i;
 	uint64_t	set_count;
@@ -24,7 +24,7 @@ bool	parse_args(int argc, char **argv, t_args *parsed_args)
 	while (set_count < sizeof(sim_timeset))
 	{
 		if (philo_atoi(argv[i], &parsed_args->simulate_time[set_count]) == 0)
-			return (free(parse_args), 0);
+			return (free(parsed_args), 0);
 		i++;
 		set_count++;
 	}

@@ -32,8 +32,29 @@ typedef struct	s_args
 	uint64_t	need_to_eat;
 } t_args;
 
+typedef struct	s_philo
+{
+	unsigned int	philo_id;
+	pthread_mutex_t	*primary_fork;
+	pthread_mutex_t	*secondary_fork;
+	t_philo			*prev;
+	bool			arrive;
+} t_philo;
+
+typedef struct	s_mutex;
+{
+	pthread_mutex_t	**forks_array;
+	pthread_mutex_t	*log_mutex;
+} t_mutex;
+
+typedef struct	s_observer
+{
+	bool	everyone_on_the_table;
+
+
+
 //parser
-bool	parse_args(int argc, char **argv, t_args *parsed_args);
+bool	parse_arguments(int argc, char **argv, t_args *parsed_args);
 
 //philo_util
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num);
