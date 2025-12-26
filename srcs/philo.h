@@ -17,41 +17,57 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdbool.h>
+# include <pthread.h>
 
-typedef enum	e_timeset
+typedef enum e_timeset	t_timeset;
+typedef struct s_args	t_args;
+typedef struct s_philo	t_philo;
+typedef struct s_resource	t_resource;
+typedef struct s_table	t_table;
+
+enum	e_timeset
 {
-	die_ms,
-	eat_ms,
-	sleep_ms,
-}	sim_timeset;
+	DIE_MS = 0,
+	EAT_MS = 1,
+	SLEEP_MS = 2,
+	TIMESET_SIZE = 3
+};
 
-typedef struct	s_args
+struct	s_args
 {
 	uint64_t	num_of_philos;
-	uint64_t	simulate_time[sizeof(sim_timeset)];
-	uint64_t	need_to_eat;
-} t_args;
+	uint64_t	simulate_time[TIMESET_SIZE];
+	int64_t		num_of_must_eat;
+};
 
-typedef struct	s_philo
+struct	s_resource
 {
+	pthread_mutex_t	*forks_array;
+	pthread_mutex_t	logger_mutex;
+	pthread_mutex_t	died_flag_mutex;
+	bool			is_died_flag;
+};
+
+struct	s_philo
+{
+	pthread_t		thread_id;
 	unsigned int	philo_id;
-	pthread_mutex_t	*primary_fork;
-	pthread_mutex_t	*secondary_fork;
-	t_philo			*prev;
-	bool			arrive;
-} t_philo;
+	unsigned int	primary_fork;
+	unsigned int	secondary_fork;
+	unsigned int	ate_count;
+	uint64_t		last_meal_time;
+	pthread_mutex_t	meal_mutex;
+	t_table			*round;
+};
 
-typedef struct	s_mutex;
+struct	s_table
 {
-	pthread_mutex_t	**forks_array;
-	pthread_mutex_t	*log_mutex;
-} t_mutex;
-
-typedef struct	s_observer
-{
-	bool	everyone_on_the_table;
-
-
+	t_philo		**philos;
+	t_args		*sim_config;
+	t_resource	*shared;
+	uint64_t	sim_start_time;
+	pthread_t	observer;
+};
 
 //parser
 bool	parse_arguments(int argc, char **argv, t_args *parsed_args);

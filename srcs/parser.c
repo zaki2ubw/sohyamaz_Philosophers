@@ -21,14 +21,15 @@ bool	parse_arguments(int argc, char **argv, t_args *parsed_args)
 		return (free(parsed_args), 0);
 	i = 2;
 	set_count = 0;
-	while (set_count < sizeof(sim_timeset))
+	while (set_count < TIMESET_SIZE)
 	{
 		if (philo_atoi(argv[i], &parsed_args->simulate_time[set_count]) == 0)
 			return (free(parsed_args), 0);
 		i++;
 		set_count++;
 	}
-	if (argc == 6 && philo_atoi(argv[5], &parsed_args->need_to_eat) == 0)
+	parsed_args->num_of_must_eat = -1;
+	if (argc == 6 && philo_atoi(argv[5], &parsed_args->num_of_must_eat) == 0)
 		return (free(parsed_args), 0);
 	return (1);
 }

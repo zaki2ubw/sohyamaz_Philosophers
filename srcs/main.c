@@ -35,9 +35,9 @@ int	main(int argc, char **argv)
 	if (parse_arguments(argc, argv, config_info) == 0)
 		return (free(config_info), 1);
 	printf("num_of_philos: %lu\n", config_info->num_of_philos);
-	printf("ttdie: %lu\n", config_info->simulate_time[die_ms]);
-	printf("tteat: %lu\n", config_info->simulate_time[eat_ms]);
-	printf("ttsleep: %lu\n", config_info->simulate_time[sleep_ms]);
+	printf("ttdie: %lu\n", config_info->simulate_time[DIE_MS]);
+	printf("tteat: %lu\n", config_info->simulate_time[EAT_MS]);
+	printf("ttsleep: %lu\n", config_info->simulate_time[SLEEP_MS]);
 	printf("num_of_philo_must_eat: %lu\n", config_info->need_to_eat);
 	//construct
 	//create_threads
