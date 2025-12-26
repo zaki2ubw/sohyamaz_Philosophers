@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:11:32 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/20 18:50:05 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 00:42:40 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ struct	s_args
 {
 	uint64_t	num_of_philos;
 	uint64_t	simulate_time[TIMESET_SIZE];
-	int64_t		num_of_must_eat;
+	uint64_t	num_of_must_eat;
 };
 
 struct	s_resource

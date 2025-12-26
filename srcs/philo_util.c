@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:22:25 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/20 18:59:27 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 00:38:30 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,23 @@ bool	philo_atoi(const char *origin_str, uint64_t *converted_num)
 	size_t		i;
 
 	if (origin_str == NULL || converted_num == NULL || origin_str[0] == 0)
-		return (0);
+		return (false);
 	origin_len = 0;
 	tmp_for_calc = 0;
 	if (philo_strlen(origin_str, &origin_len) == 0)
-		return (0);
+		return (false);
 	i = 0;
 	while (i < origin_len)
 	{
 		if (is_valid_number(origin_str[i]) == 0)
-			return (0);
+			return (false);
 		tmp_for_calc = tmp_for_calc * 10 + (origin_str[i] - '0');
+		if (tmp_for_calc > UINT64_MAX / 10)
+			return (false);
 		i++;
 	}
 	*converted_num = tmp_for_calc;
-	return (1);
+	return (true);
 }
 
 bool	philo_strlen(const char *str, size_t *len)

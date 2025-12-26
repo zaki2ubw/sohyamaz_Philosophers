@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:13:42 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/20 18:58:39 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 00:51:58 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	printf("ttdie: %lu\n", config_info->simulate_time[DIE_MS]);
 	printf("tteat: %lu\n", config_info->simulate_time[EAT_MS]);
 	printf("ttsleep: %lu\n", config_info->simulate_time[SLEEP_MS]);
-	printf("num_of_philo_must_eat: %lu\n", config_info->need_to_eat);
+	printf("num_of_philo_must_eat: %lu\n", config_info->num_of_must_eat);
 	//construct
 	//create_threads
 	//simulate
