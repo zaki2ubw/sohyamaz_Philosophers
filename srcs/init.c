@@ -6,24 +6,24 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 02:31:06 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 12:13:35 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 12:55:38 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	init_table(int argc, char **argv, t_table **table)
+bool	init_table(t_args *parsed_args, t_table **table)
 {
 	*table = (t_table *)philo_calloc(1, sizeof(t_table));
 	if (table == NULL)
 		return (false);
+	(*table)->config = parsed_args;
 	if (init_table_vars(*table) == false)
 		return (false);
-	if (parse_arguments(argc, argv, *table->config) == false)
+	if (init_philos((*table)->philos, *table) == false)
 		return (false);
-	if (init_philos(*table->philos, *table) == false)
-		return (false);
-	if (init_shared_mutex(*table->shared, *table->config->headcount) == false)
+	if (init_shared_mutex((*table)->shared, \
+				(*table)->config->headcount) == false)
 		return (false);
 	return (true);
 }
@@ -35,10 +35,8 @@ bool	init_table_vars(t_table *table)
 	table->shared = (t_resource *)philo_calloc(1, sizeof(t_resource));
 	if (table->shared == NULL)
 		return (false);
-	table->config = (t_args *)philo_calloc(1, sizeof(t_args));
-	if (table->config == NULL)
-		return (false);
-	table->philos = (t_philos **)philo_calloc(1, sizeof(t_philo *));
+	table->philos = \
+		(t_philo **)philo_calloc(table->config->headcount, sizeof(t_philo *));
 	if (table->philos == NULL)
 		return (false);
 	return (true);
@@ -56,7 +54,7 @@ bool	init_philos(t_philo **philo, t_table *table)
 		table->philos[i] = (t_philo *)philo_calloc(1, sizeof(t_philo));
 		if (table->philos[i] == NULL)
 			return (false);
-		if (pthread_mutex_init(table->philo[i]->meal_mutex) != 0)
+		if (pthread_mutex_init(&table->philos[i]->meal_mutex, 0) != 0)
 			return (false);
 		table->philos[i]->is_meal_init = true;
 		table->philos[i]->round = table;
@@ -89,6 +87,6 @@ bool	init_shared_mutex(t_resource *shared, uint64_t headcount)
 	shared->is_logger_init = true;
 	if (pthread_mutex_init(&shared->died_flag_mutex, 0) != 0)
 		return (false);
-	shared->is_flag_init = true;
+	shared->is_died_mutex_init = true;
 	return (true);
 }

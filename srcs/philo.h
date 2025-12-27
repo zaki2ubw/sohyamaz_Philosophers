@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:11:32 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 12:07:29 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 13:30:20 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdint.h>
 # include <stdbool.h>
 # include <pthread.h>
+
+# define NO_SIM_LIMIT 0
 
 typedef enum e_timeset	t_timeset;
 typedef struct s_args	t_args;
@@ -47,7 +49,7 @@ struct	s_resource
 	pthread_mutex_t	died_flag_mutex;
 	uint64_t		forks_init_count;
 	bool			is_logger_init;
-	bool			is_flag_init;
+	bool			is_died_mutex_init;
 	bool			is_died_flag;
 };
 
@@ -74,7 +76,7 @@ struct	s_table
 };
 
 //constructor
-bool	init_table(int argc, char **argv, t_table **table);
+bool	init_table(t_args *parsed_args, t_table **table);
 bool	init_table_vars(t_table *table);
 bool	init_philos(t_philo **philo, t_table *table);
 bool	init_shared_mutex(t_resource *shared, uint64_t headcount);
@@ -84,9 +86,9 @@ bool	parse_arguments(int argc, char **argv, t_args *parsed_args);
 
 //destructor
 void	destruct_table(t_table *table);
-void	destruct_shared_mutex(t_resource *shared, uint64_t headcount);
+void	destruct_shared_mutex(t_resource *shared);
 void	destruct_philos(t_philo **philos, uint64_t headcount);
-void	destruct_table(t_table *table);
+void	destruct_table_vars(t_table *table);
 
 //philo_util
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num);

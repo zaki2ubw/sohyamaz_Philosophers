@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 10:39:29 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 12:10:38 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 13:09:41 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 void	destruct_table(t_table *table)
 {
-	destruct_shared_mutex(table->shared, table->config->headcount);
+	destruct_shared_mutex(table->shared);
 	destruct_philos(table->philos, table->config->headcount);
-	destruct_table(table);
+	destruct_table_vars(table);
+	free(table);
 	return ;
 }
 
-void	destruct_shared_mutex(t_resource *shared, uint64_t headcount)
+void	destruct_shared_mutex(t_resource *shared)
 {
 	uint64_t	i;
 
-	if (shared->is_flag_init == true)
-		pthread_mutex_destroy(&shared->is_died_flag);
+	if (shared->is_died_mutex_init == true)
+		pthread_mutex_destroy(&shared->died_flag_mutex);
 	if (shared->is_logger_init == true)
 		pthread_mutex_destroy(&shared->logger_mutex);
 	i = 0;
@@ -46,18 +47,19 @@ void	destruct_philos(t_philo **philos, uint64_t headcount)
 	while (i < headcount)
 	{
 		if (philos[i]->is_meal_init == true)
-			pthread_mutex_destroy(&pthread_mutex_destroy[i]->meal_mutex);
+			pthread_mutex_destroy(&philos[i]->meal_mutex);
 		free(philos[i]);
 		i++;
 	}
 	return ;
 }
 
-void	destruct_table(t_table *table)
+void	destruct_table_vars(t_table *table)
 {
 	free(table->shared);
 	free(table->philos);
-	free(table->config);
-	free(table);
+	table->philos = NULL;
+	table->config = NULL;
+	table->shared = NULL;
 	return ;
 }

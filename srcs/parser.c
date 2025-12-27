@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:55:05 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 12:11:18 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 13:34:33 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ bool	parse_arguments(int argc, char **argv, t_args *parsed_args)
 		set_count++;
 	}
 	parsed_args->num_of_must_eat = 0;
-	if (argc == 6)
+	if (argc == 5)
+		parsed_args->num_of_must_eat = NO_SIM_LIMIT;
+	else if (argc == 6)
 	{
-		if (*argv[5] == '0')
-			return (false);
-		if (philo_atoi(argv[5], &parsed_args->num_of_must_eat) == 0)
+		if (*argv[5] == '0' || \
+				philo_atoi(argv[5], &parsed_args->num_of_must_eat) == 0)
 			return (false);
 	}
 	return (true);

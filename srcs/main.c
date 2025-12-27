@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:13:42 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 12:13:09 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 12:47:53 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv)
 {
 	t_table	*table;
+	t_args	*parsed_args;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -28,7 +29,14 @@ int	main(int argc, char **argv)
 			argv[2],
 			argv[3],
 			argv[4]);
-	if (init_table(argc, argv, &table) == false)
-		return (destruct_table(table), 1);
+	parsed_args = (t_args *)philo_calloc(1, sizeof(t_args));
+	if (parsed_args == NULL)
+		return (1);
+	if (parse_arguments(argc, argv, parsed_args) == false)
+		return (free(parsed_args), 1);
+	if (init_table(parsed_args, &table) == false)
+		return (free(parsed_args), destruct_table(table), 1);
+	destruct_table(table);
+	free(parsed_args);
 	return (0);
 }
