@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:54:49 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 19:10:11 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 20:02:46 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	wait_for_start_time(uint64_t sim_start_time)
 	return (true);
 }
 
-void	take_short_sleep(uint64_t wait_ms)
+void	take_short_wait(uint64_t wait_ms)
 {
 	uint64_t	end_time;
 	uint64_t	now;

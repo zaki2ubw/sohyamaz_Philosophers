@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:11:32 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 19:17:19 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 20:03:36 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	print_status(t_philo *philo, char *msg);
 //time_util
 bool	get_time_in_millisec(uint64_t *millisec);
 bool	wait_for_start_time(uint64_t sim_start_time);
-void	take_short_sleep(uint64_t wait_ms);
+void	take_short_wait(uint64_t wait_ms);
 
 //philo_util
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num);

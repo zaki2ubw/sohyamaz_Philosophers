@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:42:25 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 19:11:09 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 20:03:19 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*monitor_routine(void *table_data)
 	{
 		if (is_sim_finished(table) == true)
 			break ;
-		take_short_sleep(1000);
+		take_short_wait(1000);
 	}
 	return (NULL);
 }
@@ -45,7 +45,7 @@ bool	is_sim_finished(t_table *table)
 		if (is_philo_died(table->philos[i]) == true)
 		{
 			cremate_philo(table->shared, table->philos[i]);
-			return (pthread_mutex_unlock(&table->philos[i]->meal_mutex), false);
+			return (pthread_mutex_unlock(&table->philos[i]->meal_mutex), true);
 		}
 		if (table->config->num_of_must_eat > 0 && \
 			table->philos[i]->ate_count < table->config->num_of_must_eat)
