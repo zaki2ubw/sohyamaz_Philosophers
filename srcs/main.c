@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:13:42 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 00:51:58 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 12:13:09 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_args	*config_info;
+	t_table	*table;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -28,22 +28,7 @@ int	main(int argc, char **argv)
 			argv[2],
 			argv[3],
 			argv[4]);
-	config_info = (t_args *)philo_calloc(1, sizeof(t_args));
-	if (config_info == NULL)
-		return (1);
-	//perse
-	if (parse_arguments(argc, argv, config_info) == 0)
-		return (free(config_info), 1);
-	printf("num_of_philos: %lu\n", config_info->num_of_philos);
-	printf("ttdie: %lu\n", config_info->simulate_time[DIE_MS]);
-	printf("tteat: %lu\n", config_info->simulate_time[EAT_MS]);
-	printf("ttsleep: %lu\n", config_info->simulate_time[SLEEP_MS]);
-	printf("num_of_philo_must_eat: %lu\n", config_info->num_of_must_eat);
-	//construct
-	//create_threads
-	//simulate
-	//join_threads
-	//destruct
-	free(config_info);
+	if (init_table(argc, argv, &table) == false)
+		return (destruct_table(table), 1);
 	return (0);
 }

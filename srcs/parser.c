@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:55:05 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 00:57:21 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 12:11:18 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 bool	parse_arguments(int argc, char **argv, t_args *parsed_args)
 {
-	int	i;
 	uint64_t	set_count;
+	int			i;
 
-	if (philo_atoi(argv[1], &parsed_args->num_of_philos) == 0)
+	if (philo_atoi(argv[1], &parsed_args->headcount) == 0)
 		return (false);
 	i = 2;
 	set_count = 0;

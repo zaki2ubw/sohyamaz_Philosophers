@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:11:32 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 00:42:40 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 12:07:29 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ enum	e_timeset
 
 struct	s_args
 {
-	uint64_t	num_of_philos;
+	uint64_t	headcount;
 	uint64_t	simulate_time[TIMESET_SIZE];
 	uint64_t	num_of_must_eat;
 };
@@ -45,6 +45,9 @@ struct	s_resource
 	pthread_mutex_t	*forks_array;
 	pthread_mutex_t	logger_mutex;
 	pthread_mutex_t	died_flag_mutex;
+	uint64_t		forks_init_count;
+	bool			is_logger_init;
+	bool			is_flag_init;
 	bool			is_died_flag;
 };
 
@@ -57,20 +60,33 @@ struct	s_philo
 	unsigned int	ate_count;
 	uint64_t		last_meal_time;
 	pthread_mutex_t	meal_mutex;
+	bool			is_meal_init;
 	t_table			*round;
 };
 
 struct	s_table
 {
 	t_philo		**philos;
-	t_args		*sim_config;
+	t_args		*config;
 	t_resource	*shared;
 	uint64_t	sim_start_time;
 	pthread_t	observer;
 };
 
+//constructor
+bool	init_table(int argc, char **argv, t_table **table);
+bool	init_table_vars(t_table *table);
+bool	init_philos(t_philo **philo, t_table *table);
+bool	init_shared_mutex(t_resource *shared, uint64_t headcount);
+
 //parser
 bool	parse_arguments(int argc, char **argv, t_args *parsed_args);
+
+//destructor
+void	destruct_table(t_table *table);
+void	destruct_shared_mutex(t_resource *shared, uint64_t headcount);
+void	destruct_philos(t_philo **philos, uint64_t headcount);
+void	destruct_table(t_table *table);
 
 //philo_util
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num);
