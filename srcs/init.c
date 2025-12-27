@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 02:31:06 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 12:55:38 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/27 14:53:03 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ bool	init_shared_mutex(t_resource *shared, uint64_t headcount)
 	if (pthread_mutex_init(&shared->died_flag_mutex, 0) != 0)
 		return (false);
 	shared->is_died_mutex_init = true;
+	shared->is_died_flag = false;
 	return (true);
 }
