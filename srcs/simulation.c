@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:47:07 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/28 14:52:04 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:57:59 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ bool	start_simulation(t_table *table)
 	i = 0;
 	while (i < table->config->headcount)
 	{
+		table->philos[i]->last_meal_time = table->sim_start_time;
 		if (pthread_create(&table->philos[i]->thread_id, NULL, \
 			&philo_routine, table->philos[i]) != 0)
 			return (set_is_died_flag(table->shared, true), \

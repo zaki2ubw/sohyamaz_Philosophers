@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 10:39:29 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/28 14:50:29 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:58:46 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void	destruct_philos(t_philo **philos, uint64_t headcount)
 		return ;
 	while (i < headcount)
 	{
+		if (philos[i] == NULL)
+			break ;
 		if (philos[i]->is_meal_init == true)
 			pthread_mutex_destroy(&philos[i]->meal_mutex);
 		free(philos[i]);

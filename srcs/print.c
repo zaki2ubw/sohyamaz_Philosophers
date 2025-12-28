@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 17:31:33 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/28 14:33:24 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:06:49 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_log(t_resource *shared, t_philo *philo, \
 	if (shared->is_died_flag == true && is_died_notice == false)
 	{
 		pthread_mutex_unlock(&shared->died_flag_mutex);
+		pthread_mutex_unlock(&shared->logger_mutex);
 		return ;
 	}
 	pthread_mutex_unlock(&shared->died_flag_mutex);
@@ -32,6 +33,8 @@ void	print_log(t_resource *shared, t_philo *philo, \
 	else if (status == EATING)
 		print_status(philo, "is eating");
 	else if (status == SLEEPING)
+		print_status(philo, "is sleeping");
+	else if (status == THINKING)
 		print_status(philo, "is thinking");
 	else if (status == TAKE_FORK_1 || status == TAKE_FORK_2)
 		print_status(philo, "has taken a fork");
