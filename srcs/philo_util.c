@@ -6,11 +6,14 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:22:25 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 13:25:15 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:31:27 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static bool	philo_strlen(const char *str, size_t *len);
+static bool	is_valid_number(char c);
 
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num)
 {
@@ -38,26 +41,6 @@ bool	philo_atoi(const char *origin_str, uint64_t *converted_num)
 	return (true);
 }
 
-bool	philo_strlen(const char *str, size_t *len)
-{
-	size_t	i;
-
-	if (str == NULL)
-		return (false);
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	*len = i;
-	return (true);
-}
-
-bool	is_valid_number(char c)
-{
-	if (c < '0' || c > '9')
-		return (false);
-	return (true);
-}
-
 void	*philo_calloc(size_t mem_byte, size_t mem_size)
 {
 	unsigned char	*allocated_buf;
@@ -79,4 +62,24 @@ void	*philo_calloc(size_t mem_byte, size_t mem_size)
 		i++;
 	}
 	return (allocated_buf);
+}
+
+static bool	philo_strlen(const char *str, size_t *len)
+{
+	size_t	i;
+
+	if (str == NULL)
+		return (false);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	*len = i;
+	return (true);
+}
+
+static bool	is_valid_number(char c)
+{
+	if (c < '0' || c > '9')
+		return (false);
+	return (true);
 }

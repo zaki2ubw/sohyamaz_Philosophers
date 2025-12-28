@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:47:07 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 18:59:03 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:52:04 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 bool	start_simulation(t_table *table)
 {
-	uint64_t	delay;
 	uint64_t	i;
 
 	if (table == NULL)
 		return (false);
-	delay = table->config->headcount * 5 + MUST_WAIT;
-	if (get_time_in_millisec(&table->sim_start_time) == false)
+	if (set_sim_start_time(&table->sim_start_time, \
+		table->config->headcount) == false)
 		return (false);
-	table->sim_start_time = table->sim_start_time + delay;
 	i = 0;
-	if (table->config->headcount > 1)
-	{
-		if (pthread_create(&table->observer, NULL, \
-			&monitor_routine, table) != 0)
-			return (false);
-	}
 	while (i < table->config->headcount)
 	{
 		if (pthread_create(&table->philos[i]->thread_id, NULL, \
 			&philo_routine, table->philos[i]) != 0)
-			return (false);
+			return (set_is_died_flag(table->shared, true), \
+				stop_simulation(table), false);
 		i++;
+	}
+	if (table->config->headcount > 1)
+	{
+		if (pthread_create(&table->observer, NULL, \
+			&monitor_routine, table) != 0)
+			return (set_is_died_flag(table->shared, true), \
+				stop_simulation(table), false);
 	}
 	return (true);
 }
@@ -49,7 +49,8 @@ void	stop_simulation(t_table *table)
 	i = 0;
 	while (i < table->config->headcount)
 	{
-		pthread_join(table->philos[i]->thread_id, NULL);
+		if (table->philos[i]->thread_id != 0)
+			pthread_join(table->philos[i]->thread_id, NULL);
 		i++;
 	}
 	if (table->config->headcount > 1)

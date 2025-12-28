@@ -6,11 +6,13 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 17:31:33 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 19:08:32 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:33:24 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	print_status(t_philo *philo, char *msg);
 
 void	print_log(t_resource *shared, t_philo *philo, \
 		t_status status, bool is_died_notice)
@@ -37,7 +39,7 @@ void	print_log(t_resource *shared, t_philo *philo, \
 	return ;
 }
 
-void	print_status(t_philo *philo, char *msg)
+static void	print_status(t_philo *philo, char *msg)
 {
 	uint64_t	timestamp;
 

@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:11:32 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/28 11:00:05 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:38:09 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ struct	s_table
 };
 
 //constructor
-bool	init_table(t_args *parsed_args, t_table **table);
-bool	init_table_vars(t_table *table);
-bool	init_philos(t_philo **philo, t_table *table);
-bool	init_shared_mutex(t_resource *shared, uint64_t headcount);
+bool	construct_table(t_args *parsed_args, t_table **table);
 
 //parser
 bool	parse_arguments(int argc, char **argv, t_args *parsed_args);
@@ -103,37 +100,31 @@ bool	parse_arguments(int argc, char **argv, t_args *parsed_args);
 bool	start_simulation(t_table *table);
 void	stop_simulation(t_table *table);
 
-//observer
-void	*monitor_routine(void *table_data);
-bool	is_sim_finished(t_table *table);
-void	set_is_died_flag(t_resource *shared, bool flag);
-void	cremate_philo(t_resource *shared, t_philo *philo);
-bool	is_philo_died(t_philo *philo);
-
-//philosophers
+//routines
 void	*philo_routine(void *philo_data);
+void	*monitor_routine(void *table_data);
 
 //print
 void	print_log(t_resource *shared, t_philo *philo, \
 		t_status status, bool is_died_notice);
-void	print_status(t_philo *philo, char *msg);
 
 //time_util
 bool	get_time_in_millisec(uint64_t *millisec);
-bool	wait_for_start_time(uint64_t sim_start_time);
-void	take_short_wait(uint64_t wait_ms);
-void	wait_until_finish_task(t_table *table, uint64_t task_term);
+bool	set_sim_start_time(uint64_t	*sim_start_time, const uint64_t headcount);
+bool	wait_for_start_time(const uint64_t sim_start_time);
+void	take_short_wait(const uint64_t wait_ms);
+void	wait_until_finish_task(t_table *table, const uint64_t task_term);
 
 //philo_util
 bool	philo_atoi(const char *origin_str, uint64_t *converted_num);
-bool	philo_strlen(const char *str, size_t *len);
-bool	is_valid_number(char c);
+void	*philo_calloc(size_t mem_byte, size_t mem_size);
+
+//threads_util
+void	set_is_died_flag(t_resource *shared, bool flag);
+bool	is_anyone_died(t_table *table);
+void	*philo_must_die(t_philo *philo);
 
 //destructor
 void	destruct_table(t_table *table);
-void	destruct_shared_mutex(t_resource *shared);
-void	destruct_philos(t_philo **philos, uint64_t headcount);
-void	destruct_table_vars(t_table *table);
-void	*philo_calloc(size_t mem_byte, size_t mem_size);
 
 #endif

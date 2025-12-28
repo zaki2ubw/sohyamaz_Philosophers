@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:54:49 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/28 10:59:29 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:37:54 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,20 @@ bool	get_time_in_millisec(uint64_t *millisec)
 	return (true);
 }
 
-bool	wait_for_start_time(uint64_t sim_start_time)
+bool	set_sim_start_time(uint64_t	*sim_start_time, const uint64_t headcount)
+{
+	uint64_t	delay;
+
+	if (sim_start_time == NULL)
+		return (false);
+	delay = headcount * 5 + MUST_WAIT;
+	if (get_time_in_millisec(sim_start_time) == false)
+		return (false);
+	*sim_start_time = *sim_start_time + delay;
+	return (true);
+}
+
+bool	wait_for_start_time(const uint64_t sim_start_time)
 {
 	uint64_t	now;
 
@@ -43,7 +56,7 @@ bool	wait_for_start_time(uint64_t sim_start_time)
 	return (true);
 }
 
-void	take_short_wait(uint64_t wait_ms)
+void	take_short_wait(const uint64_t wait_ms)
 {
 	uint64_t	end_time;
 	uint64_t	now;
@@ -55,7 +68,7 @@ void	take_short_wait(uint64_t wait_ms)
 	while (1)
 	{
 		if (get_time_in_millisec(&now) == false)
-		   return ;
+			return ;
 		if (now >= end_time)
 			break ;
 		usleep(100);
@@ -63,7 +76,7 @@ void	take_short_wait(uint64_t wait_ms)
 	return ;
 }
 
-void	wait_until_finish_task(t_table *table, uint64_t task_term)
+void	wait_until_finish_task(t_table *table, const uint64_t task_term)
 {
 	uint64_t	limit;
 	uint64_t	now;
@@ -77,7 +90,7 @@ void	wait_until_finish_task(t_table *table, uint64_t task_term)
 	while (1)
 	{
 		if (get_time_in_millisec(&now) == false)
-		   return ;
+			return ;
 		if (now >= limit)
 			break ;
 		if (is_anyone_died(table) == true)
@@ -86,4 +99,3 @@ void	wait_until_finish_task(t_table *table, uint64_t task_term)
 	}
 	return ;
 }
-

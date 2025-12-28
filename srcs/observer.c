@@ -6,11 +6,15 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 13:42:25 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 20:03:19 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:30:48 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static bool	is_sim_finished(t_table *table);
+static void	cremate_philo(t_resource *shared, t_philo *philo);
+static bool	is_philo_died(t_philo *philo);
 
 void	*monitor_routine(void *table_data)
 {
@@ -25,12 +29,12 @@ void	*monitor_routine(void *table_data)
 	{
 		if (is_sim_finished(table) == true)
 			break ;
-		take_short_wait(1000);
+		take_short_wait(10);
 	}
 	return (NULL);
 }
 
-bool	is_sim_finished(t_table *table)
+static bool	is_sim_finished(t_table *table)
 {
 	bool		is_enough_meal;
 	uint64_t	i;
@@ -59,22 +63,14 @@ bool	is_sim_finished(t_table *table)
 	return (true);
 }
 
-void	set_is_died_flag(t_resource *shared, bool flag)
-{
-	pthread_mutex_lock(&shared->died_flag_mutex);
-	shared->is_died_flag = flag;
-	pthread_mutex_unlock(&shared->died_flag_mutex);
-	return ;
-}
-
-void	cremate_philo(t_resource *shared, t_philo *philo)
+static void	cremate_philo(t_resource *shared, t_philo *philo)
 {
 	set_is_died_flag(shared, true);
 	print_log(shared, philo, DIED, true);
 	return ;
 }
 
-bool	is_philo_died(t_philo *philo)
+static bool	is_philo_died(t_philo *philo)
 {
 	uint64_t	now;
 
@@ -83,10 +79,8 @@ bool	is_philo_died(t_philo *philo)
 	now = 0;
 	if (get_time_in_millisec(&now) == false)
 		return (true);
-	pthread_mutex_lock(&philo->meal_mutex);
 	if (now - philo->last_meal_time >= \
 		philo->round->config->simulate_time[DIE_MS])
 		return (true);
-	pthread_mutex_unlock(&philo->meal_mutex);
 	return (false);
 }

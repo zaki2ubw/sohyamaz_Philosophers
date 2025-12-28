@@ -6,7 +6,7 @@
 /*   By: sohyamaz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 11:13:42 by sohyamaz          #+#    #+#             */
-/*   Updated: 2025/12/27 18:43:19 by sohyamaz         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:06:33 by sohyamaz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (parse_arguments(argc, argv, parsed_args) == false)
 		return (free(parsed_args), 1);
-	if (init_table(parsed_args, &table) == false)
+	if (construct_table(parsed_args, &table) == false)
 		return (free(parsed_args), destruct_table(table), 1);
 	if (start_simulation(table) == false)
 		return (free(parsed_args), destruct_table(table), 1);
