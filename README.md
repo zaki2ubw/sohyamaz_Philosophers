@@ -1,4 +1,4 @@
-# `sohyamaz_Philosophers`
+# `Dining Philosophers Problem`
 
 ## man of funcs allowed in this project
 
